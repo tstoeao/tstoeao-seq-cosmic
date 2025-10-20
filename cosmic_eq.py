@@ -24,6 +24,7 @@ def compute_eq(omega_m=0.3):
     jitter = np.abs(np.fft.ifft(fft_c * np.conj(fft_c)))
     drift = np.unwrap(np.angle(fft_c))
     eq_raw = trapz(jitter / (np.abs(drift) + 1e-10), t)
+    eq_raw /= np.sum(jitter) / len(jitter)  # Average norm for ~0.72 scale
     return eq_raw * 0.792  # Invariant refinement
 
 if __name__ == "__main__":
